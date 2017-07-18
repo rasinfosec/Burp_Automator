@@ -63,7 +63,7 @@ def main():
 		burpReportFile = reportOutputPath + '_' + url + '_Burp_' + '.xml'
 		burpStateFile = reportOutputPath + '_' + url + '_BurpState_'
 		if runBurp:
-			cmd = "java -jar -Xmx" + memory + " -Djava.awt.headless=" + headless + " " + burpJar + ".jar" + " " + site + " " + burpReportFile + " " + burpStateFile
+			cmd = "java -jar -Xmx" + memory + " -Djava.awt.headless=" + headless + " " + burpJar + ".jar" + " " + site + " " + burpReportFile + " " + sessionToLoad + " " + burpStateFile
 			m.log("Burp Command: " + cmd)
 			return_code = call(cmd, shell=True)
 			if return_code:
