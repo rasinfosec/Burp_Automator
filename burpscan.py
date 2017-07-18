@@ -2,7 +2,6 @@
 # Modified by @rasinfosec
 # burpscan.py Version 1.0
 # Released under GPL Version 2 License.
-# January 19 2017
 
 import sys
 from subprocess import call
@@ -17,16 +16,10 @@ define the configuration below.
 """
 memory= '1024m'
 headless= 'true'
-burpV = 'burpsuite_pro_v1.7.15'
+burpV = 'burpsuite_pro_v1.7.23'
 runBurp = True
 ####################################################################################################################
 ####################################################################################################################
-
-#####################################
-#####################################
-# Changes are not needed below this #
-#####################################
-#####################################
 
 class m:
     @classmethod
@@ -37,21 +30,24 @@ class m:
 dir_path = os.path.dirname(os.path.realpath(__file__))
 # These are setting the path locations and should not need to be changed
 sessionToLoad= os.path.abspath(dir_path + '/BurpStates/blankburpstate')
-burpJar= os.path.abspath(dir_path + '/../' + burpV)
+burpJar= os.path.abspath('../../burp/' + burpV)
 reportOutputPath= os.path.abspath(dir_path + '/reports/report/')
 # This is setting the timestamp
 timeStamp = datetime.datetime.now().strftime("%Y-%m-%d")
 
 """
-The script will take a command line argument or read the file in the site dir by default
+The script will take a command line argument of a text file that contains a list of sites
 """
 if len(sys.argv) == 2:
     arg = sys.argv[1]
     f = open(arg, 'r')
 else:
-    for file in os.listdir('./sites'):
-        if file.endswith('.txt'):
-	        f = open(file, 'r')
+    print """You need to provide a text file with sites >>>
+             In the format:
+             protocol site dir, For example:
+             http www.test.com /
+             https www.test2.com /starthere
+    """
 sites = f.read().splitlines()
 f.close()
 
@@ -67,7 +63,7 @@ def main():
 		burpReportFile = reportOutputPath + '_' + url + '_Burp_' + '.xml'
 		burpStateFile = reportOutputPath + '_' + url + '_BurpState_'
 		if runBurp:
-			cmd = "java -jar -Xmx" + memory + " -Djava.awt.headless=" + headless + " " + burpJar + ".jar" + " " + site + " " + burpReportFile + " " + sessionToLoad + " " + burpStateFile
+			cmd = "java -jar -Xmx" + memory + " -Djava.awt.headless=" + headless + " " + burpJar + ".jar" + " " + site + " " + burpReportFile + " " + burpStateFile
 			m.log("Burp Command: " + cmd)
 			return_code = call(cmd, shell=True)
 			if return_code:
@@ -78,4 +74,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
