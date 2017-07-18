@@ -43,13 +43,13 @@ reportOutputPath= os.path.abspath(dir_path + '/reports/report/')
 timeStamp = datetime.datetime.now().strftime("%Y-%m-%d")
 
 """
-The script will take a command line argument or read the file in xlsList by default
+The script will take a command line argument or read the file in the site dir by default
 """
 if len(sys.argv) == 2:
     arg = sys.argv[1]
     f = open(arg, 'r')
 else:
-    for file in os.listdir('./xlsList'):
+    for file in os.listdir('./sites'):
         if file.endswith('.txt'):
 	        f = open(file, 'r')
 sites = f.read().splitlines()
