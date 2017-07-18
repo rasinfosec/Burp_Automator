@@ -3,8 +3,8 @@
 # Released under GPL Version 2 license.
 #
 # Modifications were made by Carrie Roberts of Black Hills Information Security
-# August 20, 2015
-# BHISAutoScan.py Version 2.1
+#
+# Modifications were made by @rasinfosec
 
 from burp import IBurpExtender
 from burp import IHttpListener
@@ -37,7 +37,7 @@ class BurpExtender(IBurpExtender, IHttpListener, IScannerListener):
 	self._callbacks.restoreState(File(fileName))
 	self.log( "Done loading state")
 
-	self.log( "Initiating BHISAutoScan Against: " + str(self.url))
+	self.log( "Initiating AutoScanWithBurp Against: " + str(self.url))
 
         self.last_packet_seen= int(time.time()) #initialize the start of the spider/scan
 	#add to scope if not already in there.
@@ -131,4 +131,3 @@ class BurpExtender(IBurpExtender, IHttpListener, IScannerListener):
     def log(self, logStr):
         print str(time.time()) + " " + logStr
         return
-    
